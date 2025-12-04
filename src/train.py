@@ -36,15 +36,24 @@ target_names = ['setosa', 'versicolor', 'virginica']
 # ------------------------------------------------------------------
 
 # Split train-test (STRATIFY HARUS PAKAI y, bukan y_cat!)
+#kode untuk membagi data menjadi data latih dan data uji,sata uji sebesar 20% dari total data
+# stratify=y agar data tetap seimbang saat dataset dibagi
+# random state=42 untuk melakukan split yang selalu sama
 X_train, X_test, y_train_raw, y_test_raw = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
 
 # One-hot encode setelah split
+# 0 = [1,0,0], 
+# 1 = [0,1,0], 
+# 2 = [0,0,1]  sehingga terlihat seperti matriks biner, hal ini perlu karna outputnya 3 neuron
 y_train = to_categorical(y_train_raw)
 y_test = to_categorical(y_test_raw)
 
 # Scaling fitur
+# StandardScaler untuk menormalisasi data agar tidak ada data yg persebaranya terlalu jauh
+# fit_transform menghitung mean dan std dari data train
+# transform hanya menggunakan mean dan std dari data train untuk data test
 scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
