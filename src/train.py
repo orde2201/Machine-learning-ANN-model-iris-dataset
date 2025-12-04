@@ -140,18 +140,5 @@ model.save("iris_ann_model.h5")
 import joblib
 joblib.dump(scaler, "scaler.save")
 
-print("Model dan scaler disimpan: iris_ann_model.h5, scaler.save")
 
-# ------------------------------------------------------------------
-# 9) Contoh prediksi manual
-# ------------------------------------------------------------------
-def predict_sample(sample_array):
-    """sample_array: list atau np.array panjang 4 -> fitur mentah"""
-    arr = np.array(sample_array).reshape(1, -1)
-    arr_scaled = scaler.transform(arr)
-    prob = model.predict(arr_scaled)[0]
-    cls = np.argmax(prob)
-    return target_names[cls], prob
 
-example = [5.1, 3.5, 1.4, 0.2]
-print("Contoh prediksi:", predict_sample(example))
